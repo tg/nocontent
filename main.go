@@ -24,6 +24,12 @@ func main() {
 	flag.BoolVar(&noCounters, "C", false, "Don't print counters, only filenames")
 	flag.Parse()
 
+	// Get directories to walk through; if none, use current
+	dirs := flag.Args()
+	if len(dirs) == 0 {
+		dirs = []string{"."}
+	}
+
 	// Use two threads – for walking and reading
 	runtime.GOMAXPROCS(2)
 	log.SetFlags(0)
@@ -34,7 +40,7 @@ func main() {
 	// Spawn file walker. Will close the files channel when done.
 	go func() {
 		// Ignore walk errors as we never propagate them
-		for _, root := range flag.Args() {
+		for _, root := range dirs {
 			root = filepath.Clean(root) + "/"
 			filepath.Walk(root, func(path string, info os.FileInfo, err error) (_ error) {
 				if err != nil {
