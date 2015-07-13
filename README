@@ -1,0 +1,22 @@
+nocontent -- because there's nothing in there
+---------
+
+This tool let you find files with no content, which by current definition are
+files with no non-zero bytes (i.e. empty or files full of zeros).
+
+You need Go environment set up in order to install this tool.
+Check https://golang.org/doc/install for details.
+
+Install:
+	$ go get github.com/tg/nocontent
+	
+Run:
+	$ nocontent path
+
+See:
+	 0    path/emptyfile
+	10    path/tenzeros
+	
+Story? I've done this because after restoring data from my (time machine)
+backup some of the files were broken. After closer look it turned out they
+were filled with zeros. I said: what?; and had to hunt them all.
