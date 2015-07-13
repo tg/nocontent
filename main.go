@@ -22,6 +22,10 @@ func pathError(err error, path string) string {
 func main() {
 	var noCounters bool
 	flag.BoolVar(&noCounters, "C", false, "Don't print counters, only filenames")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: nocontent [options] [path ...]\n\n")
+		flag.PrintDefaults()
+	}
 	flag.Parse()
 
 	// Get directories to walk through; if none, use current
