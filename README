@@ -2,7 +2,7 @@ nocontent -- because there's nothing in there
 ---------
 
 This tool let you find files with no content, which by current definition are
-files with no non-zero bytes (i.e. empty or files full of zeros).
+files with no non-zero bytes (i.e. full of zeros or empty files).
 
 You need Go environment set up in order to install this tool.
 Check https://golang.org/doc/install for details.
