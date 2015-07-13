@@ -13,7 +13,7 @@ type ZeroReader struct {
 	R io.Reader
 }
 
-// Read reads up to len(p) bytes. It returnes how many leading zeros was
+// Read reads up to len(p) bytes. It returns how many leading zeros was
 // read. If a non-zero byte occures, errNonZeroByte is returned.
 func (zr ZeroReader) Read(p []byte) (zeros int, err error) {
 	for len(p) > 0 && err == nil {
@@ -34,7 +34,7 @@ func (zr ZeroReader) Read(p []byte) (zeros int, err error) {
 
 // ReadZeros will read from r until incoming bytes are zero.
 // If non-zero byte occures errNonZeroByte will be returned.
-// It returnes number of zeros read from the source and optional error;
+// It returns number of zeros read from the source and optional error;
 // io.EOF is never returned, so if err is nil, it means source doesn't contain
 // any non-zero bytes.
 func ReadZeros(r io.Reader) (zeros int, err error) {
