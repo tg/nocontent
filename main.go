@@ -20,8 +20,15 @@ func pathError(err error, path string) string {
 }
 
 func main() {
-	var noCounters bool
-	flag.BoolVar(&noCounters, "C", false, "Don't print counters, only filenames")
+	var (
+		pathOnly    bool
+		minSize     int
+		deleteFiles bool
+	)
+	flag.BoolVar(&pathOnly, "l", false, "List only filenames, no byte counters")
+	flag.IntVar(&minSize, "s", 0, "Minimal size (in bytes) to report")
+	flag.BoolVar(&deleteFiles, "delete", false, "Delete files")
+
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage: nocontent [options] [path ...]\n\n")
 		flag.PrintDefaults()
@@ -63,15 +70,19 @@ func main() {
 
 	// Check files
 	for path := range files {
+		// TODO: if -s specified, check filestats if we need to scan at all
 		f, err := os.Open(path)
 		if err == nil {
 			var n int
 			n, err = ReadZeros(f)
-			if err == nil && n >= 0 {
-				if noCounters {
+			if err == nil && n >= 0 && n >= minSize {
+				if pathOnly {
 					fmt.Println(path)
 				} else {
 					fmt.Printf("%10d\t%s\n", n, path)
+				}
+				if deleteFiles {
+					err = os.Remove(path)
 				}
 			}
 			f.Close()
